@@ -1,0 +1,19 @@
+version: '3'
+services:
+  odoo-update:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: trustcode/docker-odoo-update
+    network_mode: host
+    command: autoupdate
+    volumes:
+      - ~/agora_vai:/home/temp/.ssh
+    environment:
+      PG_USER: jon_snow
+      PG_PASSWORD: 123
+      ODOO_VERSION: 11.0
+      ODOO_ENTERPRISE: 1
+      TRUSTCODE_ENTERPRISE: 1
+      DATABASE: plano_contas
+      DISABLE_LOGFILE: 1

@@ -37,9 +37,8 @@ env.cr.commit()
 # Create the autoupdate process
 print("Starting autoupdate")
 database = os.environ.get("DATABASE")
-pg_user =  os.environ.get("PG_USER")
-password =  os.environ.get("PG_PASSWORD")
-autoupdate = Popen(["odoo-bin", "shell", "-c", "odoo.conf", "-d", database, "-r", pg_user, "-w", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+autoupdate = Popen(["odoo-bin", "shell", "-c", "odoo.conf", "-d", database],
+                   stdin=PIPE, stdout=PIPE, stderr=PIPE)
 fds = [autoupdate.stdout, autoupdate.stderr]
 terminating = killing = False
 stdout = stderr = ""
@@ -81,5 +80,5 @@ while autoupdate.poll() is None:
         terminating = True
         autoupdate.terminate()
 
-sys.exit(autoupdate.poll())
 print("Finalized auto update")
+sys.exit(autoupdate.poll())
